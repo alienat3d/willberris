@@ -35,8 +35,8 @@ const search = function () {
     fetch(
       'https://wildberries-02-22-default-rtdb.europe-west1.firebasedatabase.app/db.json'
     )
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         const array = data.filter((good) =>
           good.name.toLowerCase().includes(value.toLowerCase())
         );
@@ -51,9 +51,7 @@ const search = function () {
       });
   };
 
-  searchButton.addEventListener('click', () => {
-    getData(input.value);
-  });
+  searchButton.addEventListener('click', () => getData(input.value));
 };
 
 search();
