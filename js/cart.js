@@ -17,10 +17,7 @@ const cart = function () {
 
     if (cart.some((good) => good.id === clickedGood.id)) {
       cart.map((good) => {
-        if (good.id === clickedGood.id) {
-          good.count++;
-        }
-
+        if (good.id === clickedGood.id) { good.count++; }
         return good;
       });
     } else {
@@ -35,10 +32,7 @@ const cart = function () {
     const cart = JSON.parse(localStorage.getItem('cart'));
 
     const newCart = cart.map((good) => {
-      if (good.id === id && good.count > 1) {
-        good.count--;
-      }
-
+      if (good.id === id && good.count > 1) { good.count--; }
       return good;
     });
 
@@ -50,9 +44,7 @@ const cart = function () {
     const cart = JSON.parse(localStorage.getItem('cart'));
 
     const newCart = cart.map((good) => {
-      if (good.id === id) {
-        good.count++;
-      }
+      if (good.id === id) { good.count++; }
 
       return good;
     });
@@ -64,9 +56,7 @@ const cart = function () {
   const deleteItem = (id) => {
     const cart = JSON.parse(localStorage.getItem('cart'));
 
-    const newCart = cart.filter((good) => {
-      return good.id !== id;
-    });
+    const newCart = cart.filter(good => { return good.id !== id; });
 
     localStorage.setItem('cart', JSON.stringify(newCart));
     renderCartGoods(JSON.parse(localStorage.getItem('cart')));
@@ -132,9 +122,7 @@ const cart = function () {
         name: '',
         phone: '',
       }),
-    }).then(() => {
-      cart.style.display = '';
-    });
+    }).then(() => cart.style.display = '');
   };
 
   modalForm.addEventListener('submit', (evt) => {
@@ -153,23 +141,17 @@ const cart = function () {
     cart.style.display = 'flex';
   });
 
-  closeBtn.addEventListener('click', () => {
-    cart.style.display = '';
-  });
+  closeBtn.addEventListener('click', () => cart.style.display = '');
 
   cart.addEventListener('click', (evt) => {
     if (
       !evt.target.closest('.modal') &&
       evt.target.classList.contains('overlay')
-    ) {
-      cart.style.display = '';
-    }
+    ) { cart.style.display = ''; }
   });
 
   window.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      cart.style.display = '';
-    }
+    if (evt.key === 'Escape') { cart.style.display = ''; }
   });
 };
 

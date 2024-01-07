@@ -1,15 +1,15 @@
 'use strict';
 
 const search = function () {
-  const input = document.querySelector('.search-block > input');
-  const searchButton = document.querySelector('.search-block > button');
+  const input = document.querySelector('.search-block > input'),
+    searchButton = document.querySelector('.search-block > button');
 
-  const renderGoods = (goods) => {
+  const renderGoods = goods => {
     const goodsContainer = document.querySelector('.long-goods-list');
 
     goodsContainer.innerHTML = '';
 
-    goods.forEach((good) => {
+    goods.forEach(good => {
       const goodBlock = document.createElement('div');
 
       goodBlock.classList.add('col-lg-3');
@@ -31,13 +31,13 @@ const search = function () {
     });
   };
 
-  const getData = (value) => {
+  const getData = value => {
     fetch(
       'https://wildberries-02-22-default-rtdb.europe-west1.firebasedatabase.app/db.json'
     )
       .then(res => res.json())
       .then(data => {
-        const array = data.filter((good) =>
+        const array = data.filter(good =>
           good.name.toLowerCase().includes(value.toLowerCase())
         );
 
