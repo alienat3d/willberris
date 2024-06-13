@@ -1,6 +1,7 @@
 'use strict';
 
 const cart = function () {
+  // 2.2 Также необходимо получить форму из корзины в переменную modalForm.  [см. ниже...]
   const cartBtn = document.querySelector('.button-cart'),
     cart = document.getElementById('modal-cart'),
     closeBtn = cart.querySelector('.modal-close'),
@@ -17,7 +18,10 @@ const cart = function () {
 
     if (cart.some((good) => good.id === clickedGood.id)) {
       cart.map((good) => {
-        if (good.id === clickedGood.id) { good.count++; }
+        if (good.id === clickedGood.id) {
+          good.count++;
+        }
+
         return good;
       });
     } else {
@@ -32,7 +36,10 @@ const cart = function () {
     const cart = JSON.parse(localStorage.getItem('cart'));
 
     const newCart = cart.map((good) => {
-      if (good.id === id && good.count > 1) { good.count--; }
+      if (good.id === id && good.count > 1) {
+        good.count--;
+      }
+
       return good;
     });
 
@@ -44,7 +51,9 @@ const cart = function () {
     const cart = JSON.parse(localStorage.getItem('cart'));
 
     const newCart = cart.map((good) => {
-      if (good.id === id) { good.count++; }
+      if (good.id === id) {
+        good.count++;
+      }
 
       return good;
     });
@@ -56,7 +65,9 @@ const cart = function () {
   const deleteItem = (id) => {
     const cart = JSON.parse(localStorage.getItem('cart'));
 
-    const newCart = cart.filter(good => { return good.id !== id; });
+    const newCart = cart.filter((good) => {
+      return good.id !== id;
+    });
 
     localStorage.setItem('cart', JSON.stringify(newCart));
     renderCartGoods(JSON.parse(localStorage.getItem('cart')));
@@ -110,6 +121,12 @@ const cart = function () {
     });
   };
   // * [2] == Функционал отправки данных из формы модального окна корзины ==
+  // 2.1 Напишем новую функцию sendForm(), которая будет отправлять на тестовое API объект с товарами в корзине 'cart'. [см. выше...]
+  // 2.4 С помощью метода fetch мы отправим на тестовое API JSONplaceholder нашу корзину (этот сервис специально сделан для тестирования фронтэнда без готового бэкэнда). Первым аргументом он принимает URL куда будем отсылать данные, а вторым объект с настройками. Там у нас будет метод отправки "POST" и само "тело формы" body. И его нам нужно завернуть в формат JSON наши данные при помощи метода JSON.stringify()
+  // 2.5 Также нам нужен весь объект корзины cart.
+  // 2.6 Однако настройки body лучше чуть модифицировать и поместить туда объект, а свойствами добавить туда cart, а также name & phone.
+  // ? 2.7 В Dev Tools -> Network мы можем проверить и подробнее увидеть отправление наших данных.
+  // 2.8 После успешной отправки мы закрываем модальное окно корзины, для этого пишем метод then()
   const sendForm = () => {
     const cartArray = localStorage.getItem('cart')
       ? JSON.parse(localStorage.getItem('cart'))
@@ -122,9 +139,13 @@ const cart = function () {
         name: '',
         phone: '',
       }),
-    }).then(() => cart.style.display = '');
+    }).then(() => {
+      cart.style.display = '';
+    });
   };
 
+  // 2.3.1 Повесим на форму обработку события. Также заблокируем при отсылке стандартное поведение при помощи evt.preventDefault();
+  // 2.3.2 Также по клику на кнопке "Checkout" у нас будет выполняться функция sendForm().
   modalForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -141,17 +162,23 @@ const cart = function () {
     cart.style.display = 'flex';
   });
 
-  closeBtn.addEventListener('click', () => cart.style.display = '');
+  closeBtn.addEventListener('click', () => {
+    cart.style.display = '';
+  });
 
   cart.addEventListener('click', (evt) => {
     if (
       !evt.target.closest('.modal') &&
       evt.target.classList.contains('overlay')
-    ) { cart.style.display = ''; }
+    ) {
+      cart.style.display = '';
+    }
   });
 
   window.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') { cart.style.display = ''; }
+    if (evt.key === 'Escape') {
+      cart.style.display = '';
+    }
   });
 };
 
